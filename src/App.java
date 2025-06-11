@@ -1,4 +1,4 @@
-import java.util.Queue;
+
 
 import controllers.QueueG;
 import controllers.Stack;
@@ -46,7 +46,7 @@ public class App {
         colaPe.printStack();
         System.out.println("Persona atendida: "+colaPe.remove());
         colaPe.printStack();
-        Persona pB = colaPe.findByName("Name");
+        Persona pB = colaPe.findByName("Juan");
         System.out.println("Persona encontrada = "+pB);
         Persona pE = colaPe.deleteByName("Pedro");
         System.out.println("Persona eliminada= "+pE);

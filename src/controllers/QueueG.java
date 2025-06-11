@@ -47,21 +47,45 @@ public class QueueG <T> {
         return primeroC.getValue();
        
     }
-    public T findByName(String name){
-        if(name==primeroC.getValue()){
-            return primeroC.getValue();
-        }else{
-            return null;
+    public T findByName(String name) {
+        NodeGeneric<T> current = primeroC;
+        while (current != null) {
+            if (current.getValue().toString().equalsIgnoreCase(name)) {
+                return current.getValue();
+            }
+            current = current.getNext();
         }
+        return null;
     }
-
-    public T deleteByName(String name){
-        if(isEmpty()){
+    
+    public T deleteByName(String name) {
+        if (isEmpty()) {
             throw new EmptyStackException();
         }
-        T aux = primeroC.getValue();
-        primeroC = primeroC.getNext();
-        return aux;
+    
+        NodeGeneric<T> current = primeroC;
+        NodeGeneric<T> previous = null;
+    
+        while (current != null) {
+            if (current.getValue().toString().equalsIgnoreCase(name)) {
+                if (previous == null) {
+                    primeroC = current.getNext();
+                    if (primeroC == null) {
+                        ultimo = null;
+                    }
+                } else {
+                    previous.setNext(current.getNext());
+                    if (current == ultimo) {
+                        ultimo = previous;
+                    }
+                }
+                size--;
+                return current.getValue();
+            }
+            previous = current;
+            current = current.getNext();
+        }
+        return null;
     }
 
     public int size(){
@@ -73,11 +97,19 @@ public class QueueG <T> {
     }
 
     public void printStack() {
+        if (isEmpty()) {
+            System.out.println("La cola está vacía.");
+            return;
+        }
+    
         NodeGeneric<T> aux = primeroC;
-        NodeGeneric<T> aux2 = ultimo;
         while (aux != null) {
-            System.out.print(aux.getValue() + "/");
+            System.out.print(aux.getValue());
+            if (aux.getNext() != null) {
+                System.out.print("/");
+            }
             aux = aux.getNext();
+            
         }
         System.out.println();
     }
